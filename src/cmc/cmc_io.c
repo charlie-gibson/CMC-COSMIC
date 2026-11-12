@@ -307,8 +307,8 @@ void PrintFileOutput(void) {
 		TotalTime, cenma.m * madhoc, Dt, rho_core, Etotal.tot, Etotal.K, Etotal.P);
 	
 	/* output Time,N_MAX,TotalE,TotalKE,TotalPE,Mtotal */
-	rootfprintf(dynfile, "%.8g %.8g %ld %ld %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g\n",
-		TotalTime, Dt, tcount, clus.N_MAX, Mtotal, -2.0*Etotal.K/Etotal.P, N_core, core_radius, max_r, 
+	rootfprintf(dynfile, "%ld %.8g %.8g %ld %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g %.8g\n",
+		tcount, TotalTime, Dt, clus.N_MAX, Mtotal, -2.0*Etotal.K/Etotal.P, N_core, core_radius, max_r, 
 		Etotal.tot, Etotal.K, Etotal.P, Etotal.Eint, Etotal.Eb, cenma.E, Eescaped, Ebescaped, Eintescaped, 
 		Eoops, Etotal.tot+Eoops, clusdyn.rh, central.rho, central.rc_spitzer, central.v_rms, rc_nb, DMse*units.m/MSUN, DMrejuv*units.m/MSUN, N_core_nb);
 
@@ -2408,7 +2408,7 @@ MPI: In the parallel version, IO is done in the following way. Some files requir
 			fprintf(centmass_file, "# Information on central black hole [code units unless otherwise noted]\n");
 			fprintf(centmass_file, "#1:t #2:cenma.m #3:Dt #4:rho_core #5:Etotal.tot #6:Etotal.K #7:Etotal.P\n");
 			fprintf(dynfile, "# Dynamical information [code units]\n");
-			fprintf(dynfile, "#1:t #2:Dt #3:tcount #4:N #5:M #6:VR #7:N_c #8:r_c #9:r_max #10:Etot #11:KE #12:PE #13:Etot_int #14:Etot_bin #15:E_cenma #16:Eesc #17:Ebesc #18:Eintesc #19:Eoops #20:Etot+Eoops #21:r_h #22:rho_0 #23:rc_spitzer #24:v0_rms #25:rc_nb #26.DMse[Msun] #27.DMrejuv[Msun] #28.N_c_nb\n");
+			fprintf(dynfile, "#1:tcount #2:TotalTime #3:Dt #4:N #5:M #6:VR #7:N_c #8:r_c #9:r_max #10:Etot #11:KE #12:PE #13:Etot_int #14:Etot_bin #15:E_cenma #16:Eesc #17:Ebesc #18:Eintesc #19:Eoops #20:Etot+Eoops #21:r_h #22:rho_0 #23:rc_spitzer #24:v0_rms #25:rc_nb #26.DMse[Msun] #27.DMrejuv[Msun] #28.N_c_nb\n");
 			//Sourav:printing properties at 10 lagrange radii
 			if (CALCULATE10){
 				fprintf(lagrad10file, "#Dynamical information at 0.1 lagrange radius\n");
@@ -2560,12 +2560,12 @@ MPI: In the parallel version, IO is done in the following way. Some files requir
 //MPI: Headers are written out only by the root node.
    // print header
     if(RESTART_TCOUNT <= 0){
-		pararootfprintf(escfile,"#1:tcount #2:t #3:r #4:vr #5:vt #6:E #7:J #8:r_peri #9:r_apo #10:Rtidal "
+		pararootfprintf(escfile,"#1:tcount #2:TotalTime #3:r #4:vr #5:vt #6:E #7:J #8:r_peri #9:r_apo #10:Rtidal "
 		                        "#11:phi_zero #12:phi_tidal #13:Ecrit #14:id0 #15:id1 #16:st0 #17:st1 #18:m0 #19:m1 #20:a "
 		                        "#21:e #22:eta #23:rad0 #24:rad1 #25:lum0 #26:lum1 #27:massc0 #28:massc1 #29:menv0 #30:menv1 "
 		                        "#31:radc0 #32:radc1 #33:renv0 #34:renv1 #35:radrol0 #36:radrol1 #37:tms0 #38:tms1 #39:dmdt0 #40:dmdt1 "
 		                        "#41:bacc0 #42:bacc1 #43:tacc0 #44:tacc1 #45:mass0_0 #46:mass0_1 #47:ospin0 #48:ospin1 #49:B0 #50:B1 "
-		                        "#51:epoch0 #52:epoch1 $53:formation0 #54:formation1 #55:bhspin0 #56:bhspin1\n");
+		                        "#51:epoch0 #52:epoch1 #53:formation0 #54:formation1 #55:bhspin0 #56:bhspin1\n");
 	   // print header
 		pararootfprintf(triplefile, "#1:time #2:min0 #3:min1 #4:mout #5:Rin0 #6:Rin1 #7:Rout #8:ain #9:aout #10:ein #11:eout #12:ktypein0 #13:ktypein1 #14:ktypeout #15:Tlk_quad #16:Tlk_oct#17:eps_oct #18:T_GR #19:eps_GR\n");
 	   // print header
@@ -2581,11 +2581,11 @@ MPI: In the parallel version, IO is done in the following way. Some files requir
 		if (THREEBODYBINARIES)
 			{
 			// print header
-			pararootfprintf(threebbfile, "#1:time #2:k1 #3:k2 #4:k3 #5:id1 #6:id2 #7:id3 #8:m1 #9:m2 #10:m3 #11:ave_local_mass #12:n_local #13:sigma_local #14:eta #15:Eb #16:ecc #17:a[AU] #18:r_peri[AU] #19:r(bin) #20:r(single) #21:vr(bin) #22:vt(bin) #23:vr(single) #24:vt(single) #25:phi(bin) #26:phi(single) #27:delta_PE #28:delta_KE #29:delta_E(interaction) #30:delta_E(cumulative) #31:N_3bb\n");
+			pararootfprintf(threebbfile, "#1:tcount #2:TotalTime #3:k1 #4:k2 #5:k3 #6:id1 #7:id2 #8:id3 #9:m1 #10:m2 #11:m3 #12:ave_local_mass #13:n_local #14:sigma_local #15:eta #16:Eb #17:ecc #18:a[AU] #19:r_peri[AU] #20:r(bin) #21:r(single) #22:vr(bin) #23:vt(bin) #24:vr(single) #25:vt(single) #26:phi(bin) #27:phi(single) #28:delta_PE #29:delta_KE #30:delta_E(interaction) #31:delta_E(cumulative) #32:N_3bb\n");
 			// print header
-			pararootfprintf(threebbprobabilityfile, "#1:time #2:dt #3:dt*N/log(gamma*N) #3:Rate_3bb #4:P_3bb #5:r\n### average rate and probability of three-body binary formation in the timestep; calculated from the innermost 300 triplets of single stars considered for three-body binary formation\n");
+			pararootfprintf(threebbprobabilityfile, "#1:tcount #2:TotalTime #3:dt #4:dt*N/log(gamma*N) #5:Rate_3bb #6:P_3bb #7:r\n### average rate and probability of three-body binary formation in the timestep; calculated from the innermost 300 triplets of single stars considered for three-body binary formation\n");
 			// print header
-			pararootfprintf(lightcollisionfile, "#1:time #2:k1 #3:k2 #4:k3 #5:id1 #6:id2 #7:id3 #8:m1 #9:m2 #10:m3 #11:type1 #12:type2 #13:type3 #14:rad1 #15:rad2 #16:rad3 #17:Eb #18:ecc #19:a(au) #20:rp(au)\n");
+			pararootfprintf(lightcollisionfile, "#1:tcount #2:TotalTime #3:k1 #4:k2 #5:k3 #6:id1 #7:id2 #8:id3 #9:m1 #10:m2 #11:m3 #12:type1 #13:type2 #14:type3 #15:rad1 #16:rad2 #17:rad3 #18:Eb #19:ecc #20:a(au) #21:rp(au)\n");
 			// print header
 			pararootfprintf(threebbdebugfile, "#1:k1 #2:k2 #3:k3 #4:id1 #5:id2 #6:id3 #7:r1 #8:r2 #9:r3 #10:m1 #11:m2 #12:m3 #13:v1 #14:v1[1] #15:v1[2] #16:v1[2] #17:v2 #18:v2[1] #19:v2[2] #20:v2[3] #21:v3 #22:v3[1] #23:v3[2] #24:v3[3] #25:v1_cmf #26:v1_cmf[1] #27:v1_cmf[2] #28:v1_cmf[3] #29:v2_cmf #30:v2_cmf[1] #31:v2_cmf[2] #32:v2_cmf[3] #33:v3_cmf #34:v3_cmf[1] #35:v3_cmf[2] #36:v3_cmf[3] #37:knew #38:bin_id #39:bin_r #40:bin_m #41:vs_cmf #42:vs_cmf[1] #43:vs_cmf[2] #44:vs_cmf[3] #45:vb_cmf #46:vb_cmf[1] #47:vb_cmf[2] #48:vb_cmf[3] #49:vs #50:vs[1] #51:vs[2] #52:vs[3] #53:vb #55:vb[1] #56:vb[2] #57:vb[3] #58:ave_local_m #59:sigma #60:eta #61:Eb #62:ecc #63:rp #64:a #65:PE_i #66:PE_f #67:KE_cmf_i #68:KE_cmf_f #69:KE_i #70:KE_f #71:delta_PE #72:delta_KE #73:delta_E\n");
 		}

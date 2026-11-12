@@ -623,7 +623,7 @@ void make_threebodybinary(double P_3bb, long k1, long k2, long k3, long form_bin
 		star[k2].threebb_interacted = 0;
 		star[k3].threebb_interacted = 0;
 
-		parafprintf(lightcollisionfile, "%.16g %ld %ld %ld %ld %ld %ld %g %g %g %d %d %d %g %g %g %g %g %g %g\n", TotalTime, k1, k2, k3, star[k1].id, star[k2].id, star[k3].id, m1*(units.m / clus.N_STAR / MSUN), m2 * (units.m / clus.N_STAR / MSUN), m3 *(units.m / clus.N_STAR / MSUN), star[k1].se_k, star[k2].se_k, star[k3].se_k, star[k1].rad * units.l / AU, star[k2].rad * units.l / AU, star[k3].rad * units.l / AU, Eb, ecc, semi_major * units.l / AU, r_p * units.l / AU);
+		parafprintf(lightcollisionfile, "%ld %.16g %ld %ld %ld %ld %ld %ld %g %g %g %d %d %d %g %g %g %g %g %g %g\n", tcount, TotalTime, k1, k2, k3, star[k1].id, star[k2].id, star[k3].id, m1*(units.m / clus.N_STAR / MSUN), m2 * (units.m / clus.N_STAR / MSUN), m3 *(units.m / clus.N_STAR / MSUN), star[k1].se_k, star[k2].se_k, star[k3].se_k, star[k1].rad * units.l / AU, star[k2].rad * units.l / AU, star[k3].rad * units.l / AU, Eb, ecc, semi_major * units.l / AU, r_p * units.l / AU);
                 //append_to_table(LIGHTCOLLISION_ID, NFIELDS_LIGHT_COLLISION, TotalTime, k1, k2, k3, star[k1].id, star[k2].id, star[k3].id, m1*(units.m / clus.N_STAR / MSUN), m2 * (units.m / clus.N_STAR / MSUN), m3 *(units.m / clus.N_STAR / MSUN),  star[k1].se_k,  star[k2].se_k,  star[k3].se_k,  star[k1].rad * units.l / AU,  star[k2].rad * units.l / AU,  star[k3].rad * units.l / AU,  Eb,  ecc,  semi_major * units.l / AU,  r_p * units.l / AU);
 	}
 	// IF binary IS TO BE FORMED, set star and binary properties for new binary, as well as properties of single star
@@ -710,7 +710,7 @@ void make_threebodybinary(double P_3bb, long k1, long k2, long k3, long form_bin
 
 		// destroy the two former single stars (which have now formed a binary)
 		// leave the remaining single star (properties have already been updated)
-		parafprintf(threebbfile, "%.16g %ld %ld %ld %ld %ld %ld %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %ld\n", TotalTime, k1, k2, k3, star[k1].id, star[k2].id, star[k3].id, m1*(units.m / clus.N_STAR / MSUN), m2*(units.m / clus.N_STAR / MSUN), m3*(units.m / clus.N_STAR / MSUN), ave_local_mass, n_local, sigma_local, eta, Eb, binary[star[knew].binind].e, binary[star[knew].binind].a * units.l / AU, r_p * units.l / AU, star_r[get_global_idx(knew)], r3, star[knew].vr, star[knew].vt, star[k3].vr, star[k3].vt, star_phi[get_global_idx(knew)], star_phi[get_global_idx(k3)], delta_PE, delta_KE, delta_E, delta_E_3bb, N3bbformed);
+		parafprintf(threebbfile, "%ld %.16g %ld %ld %ld %ld %ld %ld %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %ld\n", tcount, TotalTime, k1, k2, k3, star[k1].id, star[k2].id, star[k3].id, m1*(units.m / clus.N_STAR / MSUN), m2*(units.m / clus.N_STAR / MSUN), m3*(units.m / clus.N_STAR / MSUN), ave_local_mass, n_local, sigma_local, eta, Eb, binary[star[knew].binind].e, binary[star[knew].binind].a * units.l / AU, r_p * units.l / AU, star_r[get_global_idx(knew)], r3, star[knew].vr, star[knew].vt, star[k3].vr, star[k3].vt, star_phi[get_global_idx(knew)], star_phi[get_global_idx(k3)], delta_PE, delta_KE, delta_E, delta_E_3bb, N3bbformed);
 		destroy_obj(k1);
 		destroy_obj(k2);
 	//	parafprintf(threebbfile, "KE_cmf_i=%g  eta=%g  Eb=%g\n", KE_cmf_i, eta, Eb);

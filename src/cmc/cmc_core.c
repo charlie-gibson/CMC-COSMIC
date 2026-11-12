@@ -232,8 +232,10 @@ void append_core_header(FILE *cfile, char *tag, int core_number) {
   column= core_number*8+2;
   if (core_number==0) {
     rootfprintf(cfile, "# ");
-    rootfprintf(cfile, "1:time");
+    rootfprintf(cfile, "1:tcount");
+    rootfprintf(cfile, " 2:TotalTime");
   }
+  column++;
   rootfprintf(cfile, " %i:rho_%s", column, tag);
   column++;
   rootfprintf(cfile, " %i:v_rms_%s", column, tag);
@@ -261,7 +263,7 @@ void append_core_header(FILE *cfile, char *tag, int core_number) {
  * @param core  The struct that holds all core data.
  */
 void write_core_data(FILE *cfile, struct core_t core) {
-  rootfprintf(cfile, "%.12g %.12g %.12g %.12g %.12g %.12g %.12g %li %.12g ", TotalTime, core.rho, core.v_rms, core.r, 
+  rootfprintf(cfile, "%ld %.12g %.12g %.12g %.12g %.12g %.12g %.12g %li %.12g ", tcount, TotalTime, core.rho, core.v_rms, core.r, 
       core.r_spitzer, core.m_ave, core.n, core.N, core.Trc);
 };
 

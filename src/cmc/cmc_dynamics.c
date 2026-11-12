@@ -148,7 +148,7 @@ void dynamics_apply(double dt, gsl_rng *rng)
 						if (triplet_count == num_triplets_averaged) {
 						P_ave = P_ave/num_triplets_averaged;
 						rate_ave = rate_ave/num_triplets_averaged;
-						parafprintf(threebbprobabilityfile, "%g %g %g %g %g %g\n", TotalTime, dt, dt * ((double) clus.N_STAR)/log(GAMMA*((double) clus.N_STAR)), rate_ave, P_ave, star[k3].r);
+						parafprintf(threebbprobabilityfile, "%ld %g %g %g %g %g %g\n", tcount, TotalTime, dt, dt * ((double) clus.N_STAR)/log(GAMMA*((double) clus.N_STAR)), rate_ave, P_ave, star[k3].r);
 						}
 */
 						//=======================================================
